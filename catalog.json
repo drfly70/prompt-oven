@@ -1,0 +1,24 @@
+{
+  "version": "0.1.0",
+  "tweakPolicy": {
+    "minTechniquesPerBake": 1,
+    "maxTechniquesPerBake": 3,
+    "maxTokenChangeRatio": 0.4,
+    "allowedTweaks": ["prepend", "append", "wrap", "inject"],
+    "intensityLevels": [1, 2],
+    "mustPreserveSource": true,
+    "mixerMayRewriteCopy": false
+  },
+  "techniques": [
+    {"id": "role-expert", "name": "Expert role", "family": "role", "tweak": "prepend", "description": "Casts the model as a practitioner in the domain the source ask implies.", "intensity": ["Answer as an experienced practitioner in this domain.", "Answer as a senior practitioner in this domain: lead with the judgement call, then the reasoning behind it."]},
+    {"id": "role-audience", "name": "Named audience", "family": "role", "tweak": "prepend", "description": "Fixes who the answer is written for so register and depth stop drifting.", "intensity": ["Write for a reader who knows the basics but not this specific problem.", "Write for a reader who knows the basics but not this problem; define any term you introduce on first use."]},
+    {"id": "reason-stepwise", "name": "Stepwise reasoning", "family": "reasoning", "tweak": "append", "description": "Asks for the working, not just the verdict.", "intensity": ["Work through this step by step before giving the final answer.", "Work through this step by step, numbering each step, and state the final answer separately at the end."]},
+    {"id": "reason-decompose", "name": "Decompose first", "family": "reasoning", "tweak": "append", "description": "Forces the task to be split before it is solved.", "intensity": ["First break this into its sub-problems, then address each one.", "First list the sub-problems this splits into, say which one is load-bearing, then address each in that order."]},
+    {"id": "reason-selfcheck", "name": "Self-check pass", "family": "reasoning", "tweak": "append", "description": "Adds a verification pass over the draft answer.", "intensity": ["After answering, check your answer once for errors and correct them.", "After answering, re-read your answer against the original ask, name anything you got wrong or left out, and correct it."]},
+    {"id": "reason-alternatives", "name": "Rival options", "family": "reasoning", "tweak": "append", "description": "Requires at least one considered alternative before committing.", "intensity": ["Give one credible alternative approach and why you did not pick it.", "Give two credible alternative approaches, the trade-off each makes, and why your pick beats them."]},
+    {"id": "constraint-scope", "name": "Scope fence", "family": "constraint", "tweak": "append", "description": "Holds the answer to what was actually asked.", "intensity": ["Stay inside what was asked; do not add adjacent advice.", "Stay inside what was asked. If something adjacent matters, name it in one line at the end rather than expanding the answer."]},
+    {"id": "constraint-nofill", "name": "No invented facts", "family": "constraint", "tweak": "inject", "description": "Blocks confident filling of gaps in the source ask.", "intensity": ["If a detail is missing, say it is missing rather than assuming one.", "If a detail is missing, say so and state the assumption you are proceeding under; never present an assumption as a given."]},
+    {"id": "format-schema", "name": "Fixed output shape", "family": "format", "tweak": "wrap", "description": "Pins the answer to a declared structure so it can be parsed or compared.", "intensity": ["Return the answer in a consistent structure and keep to it throughout.", "Return the answer in a consistent structure: declare the fields you will use at the top, then fill exactly those fields, in that order."]},
+    {"id": "format-headed", "name": "Headed sections", "family": "format", "tweak": "wrap", "description": "Splits a long answer into named sections instead of one block.", "intensity": ["Break the answer into short named sections.", "Break the answer into short named sections, one idea per section, and put the direct answer in the first section."]}
+  ]
+}

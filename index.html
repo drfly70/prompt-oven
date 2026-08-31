@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Prompt Oven</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;background:#09090b;color:#f4f4f5;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    body{min-height:100dvh;padding:16px;max-width:980px;margin:0 auto}
+    header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+    h1{font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0;font-weight:600}
+    .meta{font-size:11px;color:#a1a1aa}
+    label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#a1a1aa;margin:12px 0 6px}
+    textarea,input[type=text],input[type=number]{width:100%;background:#18181b;color:#f4f4f5;border:1px solid #27272a;border-radius:6px;padding:10px;font:inherit;font-size:13px}
+    textarea{min-height:140px;resize:vertical}
+    #out{min-height:180px}
+    .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+    button{border:1px solid #27272a;background:#f4f4f5;color:#09090b;font:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:6px;cursor:pointer}
+    button.ghost{background:#18181b;color:#f4f4f5}
+    button:disabled{opacity:.4;cursor:default}
+    #tech{display:grid;grid-template-columns:1fr;gap:6px}
+    @media(min-width:720px){#tech{grid-template-columns:1fr 1fr}}
+    .tech{border:1px solid #27272a;border-radius:6px;padding:8px 10px;background:#18181b;font-size:12px}
+    .tech header{display:flex;justify-content:space-between;align-items:center;margin:0 0 4px;font-size:12px}
+    .tech .id{color:#a1a1aa;font-size:11px}
+    .tech .ops{display:flex;gap:10px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;min-height:24px}
+    .tag{border:1px solid #27272a;border-radius:999px;padding:2px 8px;font-size:11px;color:#a1a1aa}
+    .tag.on{color:#86efac;border-color:#14532d}
+    .tag.drop{color:#fb7185;border-color:#7f1d1d}
+    .banner{border:1px solid #854d0e;color:#fbbf24;padding:8px 10px;border-radius:6px;font-size:12px;margin-top:8px}
+    .banner[hidden]{display:none}
+    #hist{list-style:none;margin:0;padding:0;font-size:12px}
+    #hist li{border-top:1px solid #27272a;padding:8px 0;cursor:pointer}
+    #hist li:hover{color:#86efac}
+    .err{color:#fb7185;font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Prompt Oven</h1>
+    <div class="meta">catalog <span id="ver">—</span> · budget 0.4 · max 3 techniques</div>
+  </header>
+  <label for="src">Source ask</label>
+  <textarea id="src" placeholder="Drop a raw prompt. Short asks will bake nothing — that is the frozen policy."></textarea>
+  <div class="row">
+    <label for="seed" style="margin:0">Seed</label>
+    <input type="number" id="seed" min="0" max="4294967295" style="max-width:220px" />
+    <button type="button" class="ghost" id="reseed">New seed</button>
+    <button type="button" id="bake">Bake</button>
+    <button type="button" class="ghost" id="copy">Copy output</button>
+  </div>
+  <div class="meta" id="srcMeta"></div>
+  <label>Techniques — pin (force in) / exclude (never in). Pins cap at 3.</label>
+  <div id="tech"></div>
+  <div class="banner" id="short" hidden>Prompt too short, nothing applied. Frozen 0.4 token budget needs ~40+ source tokens before one technique fits.</div>
+  <div class="err" id="err"></div>
+  <label>Applied</label>
+  <div class="tags" id="tags"></div>
+  <label for="out">Engineered prompt</label>
+  <textarea id="out" readonly></textarea>
+  <div class="meta" id="outMeta"></div>
+  <label>Last 10 bakes</label>
+  <ul id="hist"></ul>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
