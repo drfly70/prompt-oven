@@ -1,9 +1,10 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "tweakPolicy": {
     "minTechniquesPerBake": 1,
     "maxTechniquesPerBake": 3,
     "maxTokenChangeRatio": 0.4,
+    "maxTokenChangeAbs": 60,
     "allowedTweaks": ["prepend", "append", "wrap", "inject"],
     "intensityLevels": [1, 2],
     "mustPreserveSource": true,
